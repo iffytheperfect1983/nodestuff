@@ -1,5 +1,9 @@
 const express = require('express');
 const app = express();
+require('dotenv').config({path: './test.env'});
+
+console.log(process.env.Super_Secret);
+console.log(process.env.Super_Secret1);
 
 app.use(middleware1);
 
@@ -21,7 +25,4 @@ function middleware2 (req, res, next) {
   next();
 }
 
-
-app.listen(3000, () => {
-  console.log('listening on 3000');
-});
+module.exports = {app, express};  // passing in objects {app, and express}, can import specific objects in other files

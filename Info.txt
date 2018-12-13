@@ -1,0 +1,4 @@
+- In order to remove a package, use npm rm package-name
+- for example: npm rm body-parser
+- then remove package-lock.json, then also delte node_modules folder
+- do a fresh npm install, and it'll remove the traces of body-parser
