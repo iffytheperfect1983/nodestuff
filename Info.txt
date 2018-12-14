@@ -2,3 +2,5 @@
 - for example: npm rm body-parser
 - then remove package-lock.json, then also delte node_modules folder
 - do a fresh npm install, and it'll remove the traces of body-parser
+- can modify package .json to include "dev": "nodemon server.js" and to start it, we can run npm run dev
+- if want to install not globally, we can do npm install nodemon --save-dev, and this will create dev dependency in package.json

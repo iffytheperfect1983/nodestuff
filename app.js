@@ -1,28 +1,29 @@
-const express = require('express');
-const app = express();
-require('dotenv').config({path: './test.env'});
+// app.js
 
-console.log(process.env.Super_Secret);
-console.log(process.env.Super_Secret1);
+var express = require('express');
+var bodyParser = require('body-parser');
 
-app.use(middleware1);
+var product = require('./routes/product'); // Imports routes for the products
+var app = express();
 
-app.get('/', (req, res) => {
-  res.send('Hello World');
-});
 
-app.get('/usemiddleware2', middleware2, (req, res) => {
-  res.send('Hello with middleware2');
-});
+// Set up mongoose connection
+var mongoose = require('mongoose');
+let dev_db_url = 'mongodb://someuser:ABC1234@ds139124.mlab.com:39124/productstutorial';
+let mongoDB = process.env.MONGODB_URI || dev_db_url;
+mongoose.connect(mongoDB);
+mongoose.Promise = global.Promise;
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
-function middleware1 (req, res, next) {
-  console.log('middleware1 - middleware1');
-  next();
-}
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: false}));
+app.use('/products', product);
 
-function middleware2 (req, res, next) {
-  console.log('middleware2 - middleware2');
-  next();
-}
+// var port = 3100;
+//
+// app.listen(port, () => {
+//     console.log('Server is up and running on port numner ' + port);
+// });
 
-module.exports = {app, express};  // passing in objects {app, and express}, can import specific objects in other files
+module.exports = {app, express}; // passing in objects {app, and express}, can import specific objects in other files
