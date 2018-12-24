@@ -28,8 +28,26 @@ router.post('/', auth.optional, (req, res, next) => {
 
   finalUser.setPassword(user.password);
 
+  // return finalUser.save(function (err, user) {
+  //   if (err) {
+  //     console.log('Error saving');
+  //     res.send('Error: ' + err);
+  //   } else {
+  //     res.json({user: user.toAuthJSON});
+  //     // console.log('saved');
+  //   }
+  // });
+
   return finalUser.save()
-    .then(() => res.json({ user: finalUser.toAuthJSON() }));
+    .then(() => res.json({
+      user: finalUser.toAuthJSON()
+    }))
+    .catch(function(error) {
+            console.log('Error saving');
+        });
+
+  // return finalUser.save()
+  //   .then(() => res.json({ user: finalUser.toAuthJSON() }));
 });
 
 //POST login route (optional, everyone has access)
